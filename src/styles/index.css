@@ -10,3 +10,67 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+.list-group-item {
+    position: relative;
+}
+
+.item{
+    color: rgba(128, 128, 128, 0.548);
+}
+
+.count{
+    color: rgba(128, 128, 128, 0.548);
+    border-radius: 0%;
+}
+
+.delete-button {
+    display: none; 
+    position: absolute; 
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background-color: none;
+    border: none;
+    color: rgba(128, 128, 128, 0.548);
+}
+
+.list-group-item:hover .delete-button {
+    display: block;
+}
+
+.title{
+    font-size: 4rem;
+    color: rgba(128, 128, 128, 0.26);
+}
+
+.text-center{
+    background-color: rgba(128, 128, 128, 0.158);
+    padding-bottom: 100%;
+}
+
+.list-group{
+    background-color: rgba(128, 128, 128, 0.651);
+    box-shadow: 0px 10px 0px -4px white, 0px 20px 0px -8px #fffefe, 0px 20px 20px 20px rgba(255, 255, 255, 0);
+}
+
+.footer{
+    background-color: rgba(128, 128, 128, 0.548);
+}
+
+.footer a {
+    color: #00aced;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .logo {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    width: 35px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
