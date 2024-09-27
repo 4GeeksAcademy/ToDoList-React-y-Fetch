@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import List from "./list";
 import Footer from "./footer";
+import Buttom from "./buttom";
 
 const footerData = [
 	{
@@ -13,36 +14,8 @@ const footerData = [
 ];
 
 const Home = () => {
-	const [todos, setTodos] = useState([]);
 
-	useEffect(() => {
-		console.log("Cargando componente...");
-		initializeList();
-	}, []);
 
-	async function initializeList() {
-		let resp = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			}
-		});
-
-		if (resp.status == 404) {
-			let respCreate = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				}
-			});
-		}
-
-		if (resp.status == 201) {
-			let data = await resp.json();
-			console.log({ data });
-			setTodos(data.todos);
-		}
-	}
 
 	return (
 		<div className="text-center" >

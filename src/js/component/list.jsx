@@ -1,9 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 
 //create your first component
 const List = () => {
     const [inputValue, setInputValue] = useState("");
     const [itemsArray, setItemsArray] = useState([]);
+    const [todos, setTodos] = useState([]);
+
+	useEffect(() => {
+		console.log("Cargando componente...");
+		initializeList();
+	}, []);
+
+	async function initializeList() {
+		let resp = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			}
+		});
+
+		if (resp.status == 404) {
+			let respCreate = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				}
+			});
+		}
+		if (resp.status == 201) {
+			let data = await resp.json();
+			console.log({ data });
+			setTodos(data.todos);
+		}
+	}
 
     const addArray = async (e) => {
         if (e.key === "Enter") {
@@ -18,7 +47,6 @@ const List = () => {
                         },
                         body: JSON.stringify(newItem),
                     });
-
                     if (response.ok) {
                         const data = await response.json();
                         setItemsArray([...itemsArray, data]);
@@ -33,8 +61,27 @@ const List = () => {
         }
     };
 
-    const deleteItem = (index) => {
-        setItemsArray(itemsArray.filter((_, i) => i !== index));
+    function deleteItem (id) {
+        console.log(id)
+        try {
+            const response = fetch(`https://playground.4geeks.com/todo/todos/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (response.ok) {
+            //useEffect 
+                console.log(response)
+                return response
+                
+            } else {
+                console.error("Error al borrar el item:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error en la conexión:", error);
+        }
     };
 
     return (
@@ -48,10 +95,10 @@ const List = () => {
                         onChange={(e) => setInputValue(e.target.value)}
                     />
                 </li>
-                {itemsArray.map((item, index) => (
+                {todos.map((item, index) => (
                     <li key={index} className="item list-group-item d-flex justify-content-between align-items-center">
                         {item.label}
-                        <button className="btn btn-sm delete-button" onClick={() => deleteItem(index)}>
+                        <button className="btn btn-sm delete-button" onClick={() => deleteItem(item.id)}>
                             X
                         </button>
                     </li>
