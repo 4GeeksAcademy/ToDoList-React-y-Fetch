@@ -10,27 +10,38 @@ const List = () => {
     }, []);
 
     async function initializeList() {
-        let resp = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-
-        if (resp.status === 404) {
-            await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
-                method: "POST",
+        try {
+            let resp = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 }
             });
-        }
-        if (resp.status === 200) {
-            let data = await resp.json();
-            console.log({ data });
-            setTodos(data.todos);
+    
+            if (resp.status === 404) {
+                // Si no existe, se crea un nuevo recurso
+                await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                // Llamar de nuevo a initializeList para obtener los datos
+                return initializeList();
+            }
+    
+            if (resp.ok) { // Cambié a resp.ok para manejar cualquier respuesta 200-299
+                let data = await resp.json();
+                console.log("Usuario Creado");
+                setTodos(data.todos);
+            } else {
+                console.error('Error al obtener la lista:', resp.status);
+            }
+        } catch (error) {
+            console.error('Error en la red:', error);
         }
     }
+    
 
     const addArray = async (e) => {
         if (e.key === "Enter" && inputValue.trim()) {

@@ -11,6 +11,10 @@
 
 */
 
+
+.btn-group{
+    margin: 2%;
+}
 .list-group-item {
     position: relative;
 }
