@@ -21,7 +21,7 @@ const Home = () => {
 		<div className="text-center" >
 			<h1 className="title">ToDo List</h1>
 			<List/>
-			<Buttom className=""/>
+			<Buttom />
 			<Footer properties={footerData}/>
 		</div>
 	);
