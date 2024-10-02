@@ -41,7 +41,6 @@ const List = () => {
             console.error('Error en la red:', error);
         }
     }
-    
 
     const addArray = async (e) => {
         if (e.key === "Enter" && inputValue.trim()) {
@@ -88,6 +87,34 @@ const List = () => {
         }
     };
 
+    const deleteAll = async () => {
+        try {
+            const deleteResponse = await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+    
+            if (deleteResponse.ok) {
+                console.log("Items eliminados:");
+                await fetch("https://playground.4geeks.com/todo/users/juanpablo", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                setTodos([]);
+        
+            } else {
+                console.error("Error al borrar el item:", deleteResponse.statusText);
+            }
+        } catch (error) {
+            console.error("Error en la conexión:", error);
+        }
+    };
+
+
     return (
         <div className="container w-50 justify-content-center">
             <ul className="list-group border-none">
@@ -109,6 +136,11 @@ const List = () => {
                 ))}
                 <li className="count list-group-item text-start">{todos.length} items left</li>
             </ul>
+            <div className="btn-group" role="group" aria-label="Basic example">
+
+                <button type="button" className="btn btn-danger" onClick={deleteAll}>Eliminar todo</button>
+
+            </div>
         </div>
     );
 };

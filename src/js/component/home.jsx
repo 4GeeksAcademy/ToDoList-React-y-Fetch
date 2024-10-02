@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import List from "./list";
 import Footer from "./footer";
-import Buttom from "./buttom";
 
 const footerData = [
 	{
@@ -21,7 +20,6 @@ const Home = () => {
 		<div className="text-center" >
 			<h1 className="title">ToDo List</h1>
 			<List/>
-			<Buttom />
 			<Footer properties={footerData}/>
 		</div>
 	);
